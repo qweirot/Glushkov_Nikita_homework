@@ -9,7 +9,7 @@ def read_file(filename):
     employes = []
 
     with open(filename, 'r', encoding='utf-8') as f:
-        reader = csv.reader(f, delimiter=";")
+        reader = csv.reader(f, delimiter=';')
         line_count = 0
 
         for row in reader:
@@ -62,7 +62,7 @@ def get_statistic(employes: list) -> list:
     statistic = []
     for department, salary in departments.items():
         statistic.append({
-                    'Департмент': department,
+                    'Департамент': department,
                     'Количество человек': len(salary),
                     'Минимальная': min(salary),
                     'Максимальная': max(salary),
@@ -84,28 +84,28 @@ def report3(employes: list, filename=OUTPUT_FILE):
     statistic = get_statistic(employes)
 
     with open(filename, 'w', encoding='utf-8', newline='') as f:
-            writer = csv.writer(f, delimiter=";")
+        writer = csv.writer(f, delimiter=';')
 
+        writer.writerow([
+            'Департамент',
+            'Количество сотрудников',
+            'Минимальный оклад',
+            'Максимальный оклад',
+            'Средний оклад'
+        ])
+
+        for i in statistic:
             writer.writerow([
-                'Департамент',
-                'Количество сотрудников',
-                'Минимальный оклад',
-                'Максимальный оклад',
-                'Средний оклад'
+                i['Департамент'],
+                i['Количество человек'],
+                i['Минимальная'],
+                i['Максимальная'],
+                i['Средняя']
             ])
-
-            for i in statistic:
-                writer.writerow([
-                    i['Департмент'],
-                    i['Количество человек'],
-                    i['Минимальная'],
-                    i['Максимальная'],
-                    i['Средняя']
-                ])
     print(f'Отчет сохранен в {filename}')
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
 
     x = int(input('Введите вариант отчёта: '))
     employes = read_file(INPUT_FILE)
